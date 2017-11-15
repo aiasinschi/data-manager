@@ -1,0 +1,14 @@
+<div style="border: 1px solid #AAAADD;">
+    <div><span>Details for: </span>{{dataset.name}}</div>
+    <div><span>label: </span>{{dataset.label}}</div>
+    <div><span>data:</span>
+        <table style="border: 1px solid #BBBBFF;">
+            <tr *ngFor="let row of data">
+                <td *ngFor="let cell of row" 
+                    style = "border: 1px solid #DDDDDD; padding: 2px 2px 2px 2px;">
+                    {{cell}}
+                </td>                
+            </tr>
+        </table>    
+    </div>
+</div>    

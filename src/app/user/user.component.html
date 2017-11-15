@@ -1,0 +1,11 @@
+<h2>{{ user.username | uppercase }} Details</h2>
+<!--<label>name:
+      <input [(ngModel)]="user.name" placeholder="name">
+    </label>-->
+<div><span>name: </span>{{user.name}}</div>
+<div><span>email: </span>{{user.email}}</div>
+<div><span>password: </span>{{user.password}}</div>
+<div><span>admin: </span>{{user.admin ? 'yes' : 'no'}}</div>
+<div *ngFor="let dataset of user.datasets">
+    <app-dataset [dataset] = "dataset"> </app-dataset> 
+</div>
