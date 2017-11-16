@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { User } from './user';
+import { UserService } from './service/user.service';
+import { NgSwitch } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +9,15 @@ import { User } from './user';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  /*private userService: UserService;*/
   title = 'data-manager';
+
+  constructor(private userService: UserService) {
+      this.userService = userService;
+  }
+
   users : User[] = [
-    {
+    <User>{
       name: 'Admin A. Dmin',
       username: 'admin',
       password: '1234',
@@ -24,7 +32,7 @@ export class AppComponent {
           }
       ]
     },
-    {
+    <User>{
       name: 'Adrian I. I.',
       username: 'aiasinschi',
       password: '54321',
@@ -45,4 +53,15 @@ export class AppComponent {
       ]
     }
   ];
+
+  auth_user = '';
+  auth_pass = '';
+  IS_USER_AUTH = false;
+  currentUser: User = this.users[0];
+  authenticate = function() {
+      console.log(this.auth_user + '/' + this.auth_pass);
+      this.currentUser = this.userService.getAuthenticatedUser(this.auth_user, this.auth_pass);
+      console.log(this.currentUser);
+      this.IS_USER_AUTH = this.currentUser.token != undefined;
+  }
 }

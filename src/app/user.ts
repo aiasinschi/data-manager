@@ -6,5 +6,6 @@ export class User {
     password: string;
     email: string;
     admin: boolean;
-    datasets: Dataset[]    
+    datasets: Dataset[];
+    token: string
 }

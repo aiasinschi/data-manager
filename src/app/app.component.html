@@ -1,10 +1,25 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <h1>
-    Welcome to {{title}}!
+    Welcome to {{title}}
   </h1>
-  <div *ngFor="let user of users">
-    <app-user [user]="user"></app-user>
-  </div>      
+    <div *ngIf="IS_USER_AUTH">
+        {{currentUser.name}}
+    </div>
+
+
+    <div *ngIf="IS_USER_AUTH">
+        <div *ngFor="let user of users">
+            <app-user [user]="user"></app-user>
+        </div>
+    </div>
+    <div *ngIf="!IS_USER_AUTH">
+        <label for="username">Username:</label>
+        <input id="username" [value]="auth_user" name="username" type="text"/>
+        <label for="username">Password:</label>
+        <input id="password" [value]="auth_pass" name="password" type="password"/>
+        <button id="login" (click)="authenticate()">Login</button>
+    </div>
+
 </div>
 
