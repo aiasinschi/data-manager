@@ -12,6 +12,9 @@ var USERS_COLLECTION = 'users';
 var LOCAL_DB_URL = config.database;
 
 var app = express();
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(bodyParser.json());
 app.set('superSecret', config.secret);
 
@@ -85,8 +88,9 @@ app.get('/api/users', function(req, res) {
 });
 
 app.post('/authenticate', function(req, res) {
-    var un = req.headers.username;
-    var pw = req.headers.password;
+    var un = req.body.username;
+    var pw = req.body.password;
+    console.log('auth:rest: ' + un + ':' + pw);
     db.collection(USERS_COLLECTION).find(
         {username: un, password: pw}).toArray(function(err, docs) {
         if (err) {

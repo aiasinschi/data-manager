@@ -14,6 +14,10 @@ export class AppComponent {
 
   constructor(private userService: UserService) {
       this.userService = userService;
+      let custr = localStorage.getItem('currentUser');
+      if (custr) {
+          this.currentUser = JSON.parse(custr);
+      }
   }
 
   users : User[] = [
@@ -60,8 +64,16 @@ export class AppComponent {
   currentUser: User = this.users[0];
   authenticate = function() {
       console.log(this.auth_user + '/' + this.auth_pass);
-      this.currentUser = this.userService.getAuthenticatedUser(this.auth_user, this.auth_pass);
-      console.log(this.currentUser);
-      this.IS_USER_AUTH = this.currentUser.token != undefined;
+      this.userService.getAuthenticatedUser(this.auth_user, this.auth_pass).subscribe(user => {
+        this.currentUser = user;
+        console.log(this.currentUser);
+        if (!this.currentUser) {
+          this.currentUser = <User>{name: '', token: undefined};
+        }
+        this.IS_USER_AUTH = this.currentUser.token != undefined;
+        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+      }
+    );
+
   }
 }

@@ -15,9 +15,9 @@
     </div>
     <div *ngIf="!IS_USER_AUTH">
         <label for="username">Username:</label>
-        <input id="username" [value]="auth_user" name="username" type="text"/>
+        <input id="username" [value]="auth_user" (input)="auth_user = $event.target.value" type="text"/>
         <label for="username">Password:</label>
-        <input id="password" [value]="auth_pass" name="password" type="password"/>
+        <input id="password" [value]="auth_pass" (input)="auth_pass = $event.target.value" type="password"/>
         <button id="login" (click)="authenticate()">Login</button>
     </div>
 
