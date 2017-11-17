@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from './user';
 import { UserService } from './service/user.service';
 import { NgSwitch } from '@angular/common';
@@ -8,16 +8,18 @@ import { NgSwitch } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   /*private userService: UserService;*/
   title = 'data-manager';
 
-  constructor(private userService: UserService) {
-      this.userService = userService;
-      let custr = localStorage.getItem('currentUser');
+  constructor(public userService: UserService) { }
+
+  ngOnInit() {
+      /*let custr = this.cookieService.get('currentUser');
       if (custr) {
           this.currentUser = JSON.parse(custr);
-      }
+      }*/
+     this.currentUser = this.userService.getCurrentUser();
   }
 
   users : User[] = [
@@ -61,7 +63,7 @@ export class AppComponent {
   auth_user = '';
   auth_pass = '';
   IS_USER_AUTH = false;
-  currentUser: User = this.users[0];
+  currentUser: User;
   authenticate = function() {
       console.log(this.auth_user + '/' + this.auth_pass);
       this.userService.getAuthenticatedUser(this.auth_user, this.auth_pass).subscribe(user => {
@@ -71,7 +73,8 @@ export class AppComponent {
           this.currentUser = <User>{name: '', token: undefined};
         }
         this.IS_USER_AUTH = this.currentUser.token != undefined;
-        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+        /*this.cookieService.put('currentUser', JSON.stringify(this.currentUser));*/
+        this.appModule.saveCurrentUser(this.currentUser);
       }
     );
 
