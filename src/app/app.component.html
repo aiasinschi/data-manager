@@ -1,19 +1,21 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}
-  </h1>
-    <div *ngIf="IS_USER_AUTH">
+<div class="app-container">
+  <div class="app-header">
+      <div class="app-title">
+        {{title}}
+      </div>
+      <div *ngIf="isUserAuthorized()" class="app-user-name">
         {{currentUser.name}}
-    </div>
+      </div>
+      <span class="app-button app-logout-button" (click)="logout()"> Logout </span>
+  </div>
 
 
-    <div *ngIf="IS_USER_AUTH">
-        <div *ngFor="let user of users">
-            <app-user [user]="user"></app-user>
-        </div>
+
+    <div *ngIf="isUserAuthorized()">
+        <app-user [user]="currentUser"></app-user>
     </div>
-    <div *ngIf="!IS_USER_AUTH">
+    <div *ngIf="!isUserAuthorized()">
         <label for="username">Username:</label>
         <input id="username" [value]="auth_user" (input)="auth_user = $event.target.value" type="text"/>
         <label for="username">Password:</label>

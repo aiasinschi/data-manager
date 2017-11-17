@@ -27,5 +27,7 @@ import { UserService } from './service/user.service';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-    constructor (public userService: UserService) { }
+    constructor (public userService: UserService) {
+        //console.log('INITIALIZED APP MODULE');
+    }
 }

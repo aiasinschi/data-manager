@@ -122,6 +122,12 @@ app.post('/authenticate', function(req, res) {
     });
 });
 
+app.post('/api/dataset/add', function(req, res) {
+    var un = req.body.username;
+    var dss = req.body.datasets;
+    console.log('auth:rest: ' + un + ':' + dss);
+});
+
 /*db.collection(USERS_COLLECTION).update(
    { username: currentUsername },
    {
