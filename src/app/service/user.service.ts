@@ -12,8 +12,8 @@ import { Subject } from 'rxjs/Subject';
 export class UserService {
 
   private localhost = 'http://localhost:8080';
-  private baseUrl = localhost + '/authenticate';
-  private baseApiUrl = localhost + '/api/dataset/add';
+  private baseUrl = this.localhost + '/authenticate';
+  private baseApiUrl = this.localhost + '/api/dataset/add';
   private currentUser: User;
 
   constructor (private http: Http) { }

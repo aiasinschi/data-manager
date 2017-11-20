@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   }
 
   isUserAuthorized(): boolean {
-      return this.currentUser && (this.currentUser.token);
+      return this.currentUser && (this.currentUser.token != null);
   }
 
   auth_user = '';

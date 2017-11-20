@@ -1,4 +1,4 @@
-<div>Datasets</div>
+
 
 <!--
 <div><span>username: </span>{{ user.username | uppercase }}</div>
@@ -7,8 +7,44 @@
 <div><span>password: </span>{{user.password}}</div>
 <div><span>admin: </span>{{user.admin ? 'yes' : 'no'}}</div>
 -->
-<div *ngIf="dataset">
-<div *ngFor="let dataset of user.datasets">
-    <app-dataset [dataset] = "dataset"> </app-dataset> 
+<div *ngIf="!dataset">
+    No datasets are loaded yet.
 </div>
+<div *ngIf="dataset">
+    <div>Datasets</div>
+    <div *ngFor="let ds of user.datasets">
+        <app-dataset [dataset] = "ds"> </app-dataset>
+    </div>
+</div>
+<div>
+    <span class="button-active user-button" id="loadDataset" (click)="showLoadDatasetDialog()">
+        Load a dataset
+    </span>
+</div>
+<div *ngIf="datasetDialogVisible" class="user-dialog" style="width: 360px;">
+    <div class="dialog-title">Load a dataset: </div>
+    <div>
+        <label for="dslabel">Label </label>
+        <input id="dslabel" type="text" [value]="ds_label"/>
+    </div>
+    <div>
+        <label for="dsname">Name (unique, no spaces)</label>
+        <input id="dsname" type="text" [value]="ds_name"/>
+    </div>
+    <div>
+        <label for="dsseparator">Separator character </label>
+        <input id="dsseparator" type="text" [value]="ds_separator"/>
+    </div>
+    <div>
+        <label for="dsfile">Data file</label>
+        <input id="dsfile" type="file" (change)="addDataFile($event)"/>
+    </div>
+    <div>
+        <span class="user-button" id="cancelDataset" (click)="cancelDataset()">
+            Cancel
+        </span>
+        <span class="button-active user-button" id="saveDataset" (click)="saveDataset()">
+            Save
+        </span>
+    </div>
 </div>
