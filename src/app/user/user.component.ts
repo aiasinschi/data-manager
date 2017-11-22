@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DatasetComponent } from '../dataset/dataset.component';
 import { User } from '.';
+import { Datacolumn } from '../datacolumn';
+import { DataTypes } from '../datatypes';
 
 @Component({
   selector: 'app-user',
@@ -14,6 +16,8 @@ export class UserComponent implements OnInit {
   ds_name = 'Dataset_name';
   ds_separator = ';';
   ds_file: any;
+  ds_headers = false;
+  dataColumns: Datacolumn[] = [];
 
   @Input() user: User;
   constructor() { }
@@ -41,9 +45,26 @@ export class UserComponent implements OnInit {
         console.log(file);
         this.ds_file = file.name;
         const reader = new FileReader();
+        const sep = this.ds_separator;
+        const hasHeaders = this.ds_headers;
+        const caller = this;
         reader.onload = function (evt: any) {
+            caller.dataColumns = [];
             const result = evt.target.result;
             console.log(result);
+            const lines = result.split('\n');
+            const headers = lines[0].split(sep);
+            let idx = 1;
+            for (let val of headers){
+                val = val.trim();
+                caller.dataColumns.push(<Datacolumn>{
+                    name: hasHeaders ? val : ('VAR' + idx),
+                    label: hasHeaders ? val : ('Variable ' + idx),
+                    type: DataTypes.TEXT
+                });
+                idx ++;
+            }
+            console.log(caller.dataColumns);
         };
         reader.readAsText(file, 'UTF-8');
       }

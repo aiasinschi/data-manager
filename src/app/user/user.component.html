@@ -40,6 +40,23 @@
         <input id="dsfile" type="file" (change)="addDataFile($event)"/>
     </div>
     <div>
+        <label for="dsheaders">File has headers</label>
+        <input id="dsheaders" type="checkbox" [checked]="ds_headers" (change)="ds_headers = !ds_headers"/>
+    </div>
+    <div *ngIf="dataColumns.length > 0">
+        <span>Columns</span>
+        <div *ngFor="let column of dataColumns" style="background: #8899AA;">
+            <div>
+                <label>Name </label>
+                <input type="text" [value]="column.name"/>
+            </div>
+            <div>
+                <label>Label </label>
+                <input type="text" [value]="column.label"/>
+            </div>
+        </div>
+    </div>
+    <div>
         <span class="user-button" id="cancelDataset" (click)="cancelDataset()">
             Cancel
         </span>
