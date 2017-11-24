@@ -11,7 +11,9 @@ import { NgSwitch } from '@angular/common';
 export class AppComponent implements OnInit {
   /*private userService: UserService;*/
   title = 'data-manager';
-
+  auth_user = '';
+  auth_pass = '';
+  currentUser: User;
   constructor(public userService: UserService) { }
 
   ngOnInit() {
@@ -19,9 +21,9 @@ export class AppComponent implements OnInit {
       if (custr) {
           this.currentUser = JSON.parse(custr);
       }*/
-     //this.currentUser = this.userService.getCurrentUser();
-      //console.log(localStorage);
-      let userStr = localStorage.getItem('CURRENT_USER');
+     // this.currentUser = this.userService.getCurrentUser();
+      // console.log(localStorage);
+      const userStr = localStorage.getItem('CURRENT_USER');
       this.currentUser = JSON.parse(userStr);
       console.log(this.currentUser);
   }
@@ -30,9 +32,6 @@ export class AppComponent implements OnInit {
       return this.currentUser && (this.currentUser.token != null);
   }
 
-  auth_user = '';
-  auth_pass = '';
-  currentUser: User;
   authenticate = function() {
       console.log(this.auth_user + '/' + this.auth_pass);
       this.userService.getAuthenticatedUser(this.auth_user, this.auth_pass).subscribe(user => {

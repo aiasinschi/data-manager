@@ -7,5 +7,5 @@ export class User {
     email: string;
     admin: boolean;
     datasets: Dataset[];
-    token: string
+    token: string;
 }

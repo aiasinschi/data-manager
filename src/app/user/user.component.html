@@ -23,40 +23,42 @@
 </div>
 <div *ngIf="datasetDialogVisible" class="user-dialog" style="width: 360px;">
     <div class="dialog-title">Load a dataset: </div>
-    <div>
-        <label for="dslabel">Label </label>
-        <input id="dslabel" type="text" [value]="ds_label"/>
-    </div>
-    <div>
-        <label for="dsname">Name (unique, no spaces)</label>
-        <input id="dsname" type="text" [value]="ds_name"/>
-    </div>
-    <div>
-        <label for="dsseparator">Separator character </label>
-        <input id="dsseparator" type="text" [value]="ds_separator"/>
-    </div>
-    <div>
-        <label for="dsfile">Data file</label>
-        <input id="dsfile" type="file" (change)="addDataFile($event)"/>
-    </div>
-    <div>
-        <label for="dsheaders">File has headers</label>
-        <input id="dsheaders" type="checkbox" [checked]="ds_headers" (change)="ds_headers = !ds_headers"/>
-    </div>
-    <div *ngIf="dataColumns.length > 0">
-        <span>Columns</span>
-        <div *ngFor="let column of dataColumns" style="background: #8899AA;">
-            <div>
-                <label>Name </label>
-                <input type="text" [value]="column.name"/>
-            </div>
-            <div>
-                <label>Label </label>
-                <input type="text" [value]="column.label"/>
+    <div class="dialog-content">
+        <div>
+            <label for="dslabel">Label </label>
+            <input id="dslabel" type="text" [value]="ds_label"/>
+        </div>
+        <div>
+            <label for="dsname">Name (unique, no spaces)</label>
+            <input id="dsname" type="text" [value]="ds_name"/>
+        </div>
+        <div>
+            <label for="dsseparator">Separator character </label>
+            <input id="dsseparator" type="text" [value]="ds_separator"/>
+        </div>
+        <div>
+            <label for="dsfile">Data file</label>
+            <input id="dsfile" type="file" (change)="addDataFile($event)"/>
+        </div>
+        <div>
+            <label for="dsheaders">File has headers</label>
+            <input id="dsheaders" type="checkbox" [checked]="ds_headers" (change)="ds_headers = !ds_headers"/>
+        </div>
+        <div *ngIf="dataColumns.length > 0">
+            <span>Columns</span>
+            <div *ngFor="let column of dataColumns" style="background: #8899AA;">
+                <div>
+                    <label>Name </label>
+                    <input type="text" [value]="column.name"/>
+                </div>
+                <div>
+                    <label>Label </label>
+                    <input type="text" [value]="column.label"/>
+                </div>
             </div>
         </div>
     </div>
-    <div>
+    <div class="dialog-buttons">
         <span class="user-button" id="cancelDataset" (click)="cancelDataset()">
             Cancel
         </span>

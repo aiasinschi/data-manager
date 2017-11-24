@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DatasetComponent } from '../dataset/dataset.component';
 import { User } from '.';
+import { UserService } from '../service/user.service';
+import { Dataset } from '../dataset';
 import { Datacolumn } from '../datacolumn';
 import { DataTypes } from '../datatypes';
 
@@ -18,9 +20,10 @@ export class UserComponent implements OnInit {
   ds_file: any;
   ds_headers = false;
   dataColumns: Datacolumn[] = [];
+  ds_data: any[];
 
   @Input() user: User;
-  constructor() { }
+  constructor(public userService: UserService) { }
 
   ngOnInit() {
   }
@@ -35,7 +38,14 @@ export class UserComponent implements OnInit {
 
   saveDataset () {
       this.datasetDialogVisible = false;
-      console.log('saving dataset... maybe later');
+      if (this.ds_headers) {
+          this.ds_data = this.ds_data.splice(1);
+      }
+      const dataset = <Dataset> {
+          name: this.ds_name,
+          label: this.ds_label
+      };
+      this.userService.addDatasetForUser(dataset, this.user, this.dataColumns, this.ds_data).subscribe(res => console.log(res));
   }
 
   addDataFile(event) {
@@ -53,10 +63,18 @@ export class UserComponent implements OnInit {
             const result = evt.target.result;
             console.log(result);
             const lines = result.split('\n');
+            caller.ds_data = lines;
             const headers = lines[0].split(sep);
             let idx = 1;
+            let headerSet = new Set();
             for (let val of headers){
                 val = val.trim();
+                if (hasHeaders) {
+                    if (headerSet.has(val)) {
+                        val = val + `_${idx}`;
+                    }
+                    headerSet.add(val);
+                }
                 caller.dataColumns.push(<Datacolumn>{
                     name: hasHeaders ? val : ('VAR' + idx),
                     label: hasHeaders ? val : ('Variable ' + idx),

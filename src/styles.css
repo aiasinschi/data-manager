@@ -1,15 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 /* Application-wide Styles */
+:root {
+    --bg-app: white;
+    --fg-app: #111122;
+    --bg-secondary: #8080C0;
+    --fg-secondary: #1F1F3F;
+    --bg-third: #000A4F;
+    --fg-third: #A0D0F0;
+}
+
 body {
   margin: 2em;
 }
-body, input[text], button {
-  color: #888;
-  font-family: Cambria, Georgia;
-  background: black;
-  font-size: 14px;
+body, input, button {
+  color: var(--fg-app);
+  font-family: 'Ubuntu Condensed', sans-serif;
+  background: var(--bg-app);
+  font-size: 16px;
 }
-/* everywhere else */
-* {
-  font-family: Arial, Helvetica, sans-serif;
+
+.data {
+  font-family: 'Ubuntu Mono', monospace;
+  font-size: 14px;
 }

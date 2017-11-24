@@ -1,5 +1,6 @@
 import { User } from '../user';
 import { Dataset } from '../dataset';
+import { Datacolumn } from '../datacolumn';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -25,19 +26,22 @@ export class UserService {
         'password': password
     };
     return this.http.post(this.baseUrl, body,
-                new RequestOptions({headers: this.getHeaders()}))
+                new RequestOptions({headers: this.getHeaders(undefined)}))
         .map(response => mapUsers(response));
         // .catch(error => { console.log(JSON.stringify(error.json())); } );
   }
 
 
-  addDatasetForUser(datasets: Dataset[], user: User) {
+  addDatasetForUser(dataset: Dataset, user: User, dataColumns: Datacolumn[], data: any[]) {
       const body = {
-        'datasets': JSON.stringify(datasets),
-        'username': user.username
+        'dataset': JSON.stringify(dataset),
+        'user': JSON.stringify(user),
+        'datacolumns': JSON.stringify(dataColumns),
+        'data': JSON.stringify(data)
       };
-      this.http.post(this.baseApiUrl, body,
-                new RequestOptions({headers: this.getHeaders()}))
+      return this.http.post(this.baseApiUrl, body,
+                new RequestOptions({headers: this.getHeaders(user.token)}))
+      .map(response => response);
   }
 
   public saveCurrentUser(user: User) {
@@ -52,11 +56,12 @@ export class UserService {
       return this.currentUser;
   }
 
-  private getHeaders(): Headers {
+  private getHeaders(token?: string): Headers {
     // I included these headers because otherwise FireFox
     // will request text/html instead of application/json
     const headers = new Headers();
     headers.append('Accept', 'application/json');
+    headers.append('x-access-token', token);
     return headers;
   }
 }

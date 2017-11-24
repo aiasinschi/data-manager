@@ -123,9 +123,16 @@ app.post('/authenticate', function(req, res) {
 });
 
 app.post('/api/dataset/add', function(req, res) {
-    var un = req.body.username;
-    var dss = req.body.datasets;
-    console.log('auth:rest: ' + un + ':' + dss);
+    var usr = req.body.user;
+    var dss = req.body.dataset;
+    var data = req.body.data;
+    var dcols = req.body.datacolumns;
+    console.log('add dataset: ' + usr + ':' + dss + ':'  + dcols + ':\n' + data);
+    // TODO:
+    // get datasets for user from the user object, add new dataset + columns sent,
+    // update them in the db
+    // create a new collection having the name = [username]_[dataset_name]
+    // create data objects and insert them in the collection
 });
 
 /*db.collection(USERS_COLLECTION).update(
